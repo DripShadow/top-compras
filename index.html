@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP COMPRAS - Marketplace de Ofertas</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">🛒 TOP COMPRAS</h1>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#produtos">Produtos</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                        <li><button onclick="abrirDashboardVendas()" style="background:linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);color:#fff;border:none;padding:0.5rem 1.2rem;border-radius:6px;cursor:pointer;font-weight:600;font-family:Poppins,sans-serif;transition:transform 0.2s;font-size:0.95rem;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">📊 Dashboard</button></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Bem-vindo à TOP COMPRAS</h2>
+                <p>As melhores compras, ofertas exclusivas e frete rápido</p>
+                <a href="#produtos" class="btn btn-primary">Explorar Produtos</a>
+            </div>
+        </section>
+        <section id="produtos" class="produtos">
+            <div class="section-header">
+                <h2>Produtos em Destaque</h2>
+                <p>Confira as melhores ofertas do momento</p>
+            </div>
+            
+            <!-- Filtro de Categorias -->
+            <div class="categorias-filtro">
+                <button class="categoria-btn ativo" onclick="filtrarPorCategoria('Todos')">⭐ Todos os Produtos</button>
+                <button class="categoria-btn" onclick="filtrarPorCategoria('Jogos')">🎮 Jogos</button>
+                <button class="categoria-btn" onclick="filtrarPorCategoria('Streaming')">📺 Streaming</button>
+                <button class="categoria-btn" onclick="filtrarPorCategoria('Software')">💻 Software</button>
+                <button class="categoria-btn" onclick="filtrarPorCategoria('E-Books')">📚 E-Books</button>
+                <button class="categoria-btn" onclick="filtrarPorCategoria('Cursos')">🎓 Cursos</button>
+                <button class="categoria-btn" onclick="filtrarPorCategoria('Templates')">🎨 Templates</button>
+                <button class="categoria-btn" onclick="filtrarPorCategoria('Assinaturas')">🔐 Assinaturas</button>
+            </div>
+            
+            <div class="produtos-lista" id="produtos-lista">
+                <!-- Produtos serão carregados aqui -->
+            </div>
+        </section>
+
+        <!-- Modal Detalhes do Produto -->
+        <div id="modalProduto" class="modal-produto" style="display: none;">
+            <div class="modal-conteudo">
+                <button class="modal-fechar" onclick="fecharModalProduto()">&times;</button>
+                
+                <div class="modal-grid">
+                    <div class="modal-imagem">
+                        <img id="modalImg" src="" alt="Produto">
+                    </div>
+                    
+                    <div class="modal-info">
+                        <h2 id="modalNome"></h2>
+                        <p id="modalDescricao" class="modal-descricao"></p>
+                        
+                        <div id="modalVariacoes"></div>
+                        
+                        <div class="modal-preco">
+                            <span id="modalPrecoAntigo" class="preco-antigo" style="display: none;"></span>
+                            <span id="modalPreco" class="preco-principal"></span>
+                            <span id="modalDesconto" class="desconto-badge" style="display: none;"></span>
+                        </div>
+                        
+                        <div id="modalVendidos" class="modal-vendidos" style="display: none;"></div>
+                        
+                        <div class="modal-quantidade">
+                            <label for="quantidadeProduto">Quantidade:</label>
+                            <div class="quantidade-controle">
+                                <button onclick="diminuirQuantidade()" class="btn-qtd">−</button>
+                                <input type="number" id="quantidadeProduto" value="1" min="1" max="999" readonly>
+                                <button onclick="aumentarQuantidade()" class="btn-qtd">+</button>
+                            </div>
+                        </div>
+                        
+                        <button id="btnComprarModal" class="btn btn-primary modal-comprar" onclick="comprarComQuantidade()">
+                            🛒 Comprar Agora
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Seção de Confiança e Feedbacks Públicos -->
+        <section id="confianca" class="secao-confianca">
+            <div class="container">
+                <div class="confianca-header">
+                    <h2>🌟 Por que Confiar em Nós?</h2>
+                </div>
+                
+                <div class="confianca-metricas">
+                    <div class="metrica-card">
+                        <div class="metrica-numero" id="totalVendasPublico">0</div>
+                        <div class="metrica-label">Vendas Realizadas</div>
+                    </div>
+                    <div class="metrica-card">
+                        <div class="metrica-numero" id="produtosPublico">0</div>
+                        <div class="metrica-label">Produtos Disponíveis</div>
+                    </div>
+                    <div class="metrica-card">
+                        <div class="metrica-numero">100%</div>
+                        <div class="metrica-label">Satisfação Garantida</div>
+                    </div>
+                </div>
+
+                <div class="feedbacks-secao">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
+                        <h3 style="margin:0;color:#8b5cf6;">💬 Feedback dos Clientes</h3>
+                        <button onclick="abrirFormularioFeedback()" style="background:linear-gradient(135deg, #00d9ff 0%, #0ea5e9 100%);color:#000;border:none;padding:0.65rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.95em;transition:transform 0.2s;font-family:'Poppins',sans-serif;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            ✍️ Deixar Feedback
+                        </button>
+                    </div>
+                    <div class="feedbacks-container" id="feedbacksPublico">
+                        <p style="color:#a1a1aa;text-align:center;padding:2rem;">Sem feedbacks registrados ainda. Seja o primeiro a avaliar!</p>
+                    </div>
+                </div>
+            </div>
+        </section>    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 TOP COMPRAS. Todos os direitos reservados.</p>
+                <p>Entrega rápida • Pagamento Seguro • Suporte 24/7</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

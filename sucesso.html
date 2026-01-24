@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Realizado - TOP COMPRAS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #e4e4e7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .success-card {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #e4e4e7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            color: #a1a1aa;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .order-info {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: #a1a1aa;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+            border: 2px solid rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.6);
+        }
+
+        .payment-details {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+            font-size: 0.9rem;
+            color: #71717a;
+        }
+
+        @media (max-width: 480px) {
+            .success-card {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-card">
+            <div class="checkmark">✓</div>
+            <h1>Pagamento Realizado!</h1>
+            <p class="message">
+                Seu pagamento foi processado com sucesso. Você receberá um email de confirmação em breve.
+            </p>
+
+            <div class="order-info">
+                <div class="info-row">
+                    <span class="info-label">Status do Pedido:</span>
+                    <span class="info-value">Confirmado ✓</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">ID do Pedido:</span>
+                    <span class="info-value" id="order-id">Carregando...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Valor:</span>
+                    <span class="info-value" id="order-amount">Carregando...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Loja:</span>
+                    <span class="info-value">TOP COMPRAS</span>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="index.html" class="btn btn-primary">🏠 Voltar à Loja</a>
+                <a href="javascript:window.print();" class="btn btn-secondary">🖨️ Imprimir Comprovante</a>
+            </div>
+
+            <div class="payment-details">
+                <p>
+                    <strong>Próximos passos:</strong><br>
+                    Verifique seu email para as instruções de entrega do produto.
+                    Se tiver dúvidas, entre em contato com nosso suporte em: suporte@topcompras.com
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Extrai parâmetros da URL
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('order_id') || params.get('id') || 'Pendente de confirmação';
+        const amount = params.get('amount') || params.get('total') || 'Não informado';
+
+        // Preenche as informações na página
+        document.getElementById('order-id').textContent = orderId;
+        
+        // Formata o valor se for numérico
+        if (!isNaN(amount) && amount !== '') {
+            const amountInReais = (amount / 100).toFixed(2);
+            document.getElementById('order-amount').textContent = 'R$ ' + amountInReais.replace('.', ',');
+        } else {
+            document.getElementById('order-amount').textContent = amount;
+        }
+
+        // Salva informações no localStorage para referência
+        localStorage.setItem('lastOrder', JSON.stringify({
+            orderId: orderId,
+            amount: amount,
+            timestamp: new Date().toISOString()
+        }));
+    </script>
+</body>
+</html>
