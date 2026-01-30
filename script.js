@@ -66,11 +66,11 @@ class VendasTracker {
         return Object.entries(this.vendas).map(([nome, quantidade]) => ({ nome, quantidade }));
     }
 
-    // Sincronizar vendas com servidor Netlify
+    // Sincronizar vendas com servidor Vercel
     async sincronizar() {
         try {
             console.log('🔄 Sincronizando vendas...');
-            const response = await fetch('/.netlify/functions/vendas');
+            const response = await fetch('/api/vendas');
             
             if (response.ok) {
                 const data = await response.json();
@@ -95,7 +95,7 @@ class VendasTracker {
         
         // Depois enviar para servidor
         try {
-            const response = await fetch('/.netlify/functions/vendas', {
+            const response = await fetch('/api/vendas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -133,7 +133,7 @@ class PrecosManager {
     async sincronizar() {
         try {
             console.log('🔄 Sincronizando preços...');
-            const response = await fetch('/.netlify/functions/precos');
+            const response = await fetch('/api/precos');
             
             if (response.ok) {
                 const data = await response.json();
@@ -193,7 +193,7 @@ class PrecosManager {
         
         // Sincronizar com servidor
         try {
-            const response = await fetch('/.netlify/functions/precos', {
+            const response = await fetch('/api/precos', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -241,9 +241,9 @@ class FeedbackManager {
     // Sincronizar com arquivo JSON local e Netlify Function
     async sincronizar() {
         try {
-            // Tentar usar Netlify Function primeiro
+            // Tentar usar Vercel API primeiro
             console.log('🔄 Sincronizando feedbacks...');
-            const response = await fetch('/.netlify/functions/feedbacks');
+            const response = await fetch('/api/feedbacks');
             
             if (response.ok) {
                 const data = await response.json();
@@ -364,12 +364,12 @@ class FeedbackManager {
         return false;
     }
 
-    // Salvar feedback na nuvem (usando Netlify Function ou localStorage)
+    // Salvar feedback na nuvem (usando Vercel API ou localStorage)
     async salvarNoCloud(feedback) {
         try {
-            console.log('📤 Enviando feedback para Netlify Function:', feedback);
-            // Tentar usar Netlify Function
-            const response = await fetch('/.netlify/functions/feedbacks', {
+            console.log('📤 Enviando feedback para Vercel API:', feedback);
+            // Tentar usar Vercel API
+            const response = await fetch('/api/feedbacks', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(feedback)
@@ -385,7 +385,7 @@ class FeedbackManager {
                 console.log('❌ Erro ao salvar:', result);
             }
         } catch (e) {
-            console.log('⚠️ Netlify Function falhou:', e.message);
+            console.log('⚠️ Vercel API falhou:', e.message);
         }
         
         // Fallback: salvar apenas em localStorage
@@ -408,7 +408,7 @@ class FeedbackManager {
     async deletarFeedbackComSync(feedbackId) {
         try {
             // Enviar para servidor
-            const response = await fetch('/.netlify/functions/feedbacks', {
+            const response = await fetch('/api/feedbacks', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ feedbackId })
@@ -1274,7 +1274,7 @@ function editarVendasProduto(nomeProduto, vendidosAtual) {
             vendasTracker.definirVendas(nomeProduto, qtd);
             
             // Sincronizar com servidor
-            fetch('/.netlify/functions/vendas', {
+            fetch('/api/vendas', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -1577,7 +1577,7 @@ async function curtirFeedback(feedbackId) {
     try {
         console.log(`❤️ Curtindo feedback ${feedbackId}...`);
         
-        const response = await fetch('/.netlify/functions/feedbacks', {
+        const response = await fetch('/api/feedbacks', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1613,7 +1613,7 @@ async function descurtirFeedback(feedbackId) {
     try {
         console.log(`💔 Descurtindo feedback ${feedbackId}...`);
         
-        const response = await fetch('/.netlify/functions/feedbacks', {
+        const response = await fetch('/api/feedbacks', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

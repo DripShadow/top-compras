@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d946ef;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100" height="100" fill="#0f0f1e"/>
+  
+  <!-- Shopping cart icon with gradient -->
+  <g filter="url(#glow)">
+    <!-- Cart basket -->
+    <path d="M 25 35 L 30 70 Q 30 75 35 75 L 65 75 Q 70 75 70 70 L 75 35 Z" 
+          fill="none" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Cart handle -->
+    <path d="M 35 35 Q 50 20 65 35" 
+          fill="none" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round"/>
+    
+    <!-- Decorative dots -->
+    <circle cx="42" cy="50" r="2" fill="url(#grad1)" opacity="0.8"/>
+    <circle cx="58" cy="50" r="2" fill="url(#grad1)" opacity="0.8"/>
+  </g>
+  
+  <!-- Highlight effect -->
+  <circle cx="70" cy="30" r="8" fill="#06b6d4" opacity="0.3"/>
+</svg>
